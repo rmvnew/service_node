@@ -26,8 +26,17 @@ app.use(bodyParser.json())
 //rotas
 app.get("/",(req,res)=>{
  
-
-    res.render("index")
+    Pergunta.findAll({raw:true,order:[
+        ['id','DESC'] //ASC = Crescente || DESC = Decrescente
+    ]}).then(perguntas =>{
+      
+        res.render("index",{
+            perguntas: perguntas,
+         
+        })
+        
+    })
+    
 })
 
 app.get("/perguntar",(req,res)=>{
@@ -47,6 +56,25 @@ app.post("/salvarpergunta",(req,res)=>{
    }).then(()=>{
        res.redirect("/")
    })
+
+})
+
+app.get("/pergunta/:id",(req,res)=>{
+
+    var id = req.params.id
+
+    Pergunta.findOne({
+        where: {id:id}
+    }).then( pergunta => {
+        if(pergunta != undefined){ // pergunta encontrada
+            res.render("pergunta",{
+                pergunta: pergunta,
+                
+            })
+        }else{ //pergunta nao encontrada
+            res.redirect("/")
+        }
+    })
 
 })
 
