@@ -1,28 +1,33 @@
 const express = require("express")
 const app = express()
+const bodyParser = require("body-parser")
+
+//definindo o ejs para ser view do express
 app.set('view engine','ejs')
 app.use(express.static('public'))
 
+//body parser
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 
-app.get("/:name/:lang",function(req,res){
+//rotas
+app.get("/",(req,res)=>{
+ 
 
-    var name = req.params.name
-    var lang = req.params.lang
-    var viewMsg = true
-
-    var products = [
-        {name:"Doritos", price:6.88},
-        {name:"Coca", price:5.30},
-        {name:"Arroz", price:3.33}
-    ]
-
-    res.render("index",{
-        name: name,
-        lang: lang,
-        empresa: "Delta Corp",
-        msg: viewMsg,
-        products: products
-    })
+    res.render("index")
 })
 
-app.listen(8095,()=>{console.log("app rodando!")})
+app.get("/perguntar",(req,res)=>{
+    res.render("perguntar")
+})
+
+app.post("/salvarpergunta",(req,res)=>{
+
+    var titulo = req.body.titulo
+    var descricao = req.body.descricao
+
+    res.send("Formulario recebido!! titulo: "+titulo+" descricao: "+descricao)
+
+})
+
+app.listen(8095,()=>{console.log("app rodando! sim")})
