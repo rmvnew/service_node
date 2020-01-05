@@ -1,9 +1,19 @@
+//Express
 npm install express --save
 
+//EJS telas html
 npm install ejs --save
 
+//Emulador para fazer o refresh
 npm install nodemon -g
 
+//iniciar o projeto
 npm init -y
 
+//BodyParser para pegar dados dos formulários
 npm install body-parser --save
+
+
+//Sequelize
+npm install --save sequelize
+npm install --save mysql2
